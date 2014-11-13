@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.newrelic.ios.cordova" version="4.0.0">
+    <name>New Relic</name>
+    <description>New Relic iOS Cordova Plugin</description>
+    <author>New Relic</author>
+    <license>Apache 2.0</license>
+    <keywords>cordova,phonegap,newrelic,monitoring</keywords>
+    <engines>
+        <engine name="cordova-ios" version=">=3.3.0" />
+    </engines>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="NewRelic">
+                <param name="ios-package" value="CordovaNewRelic" onload="true" />
+            </feature>
+            <preference name="NewRelicApplicationToken" value="TokenID" />
+        </config-file>
+
+        <header-file src="src/ios/CordovaNewRelic.h" />
+        <source-file src="src/ios/CordovaNewRelic.m" />
+
+        <framework src="src/ios/NewRelicAgent.framework" custom="true" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="libz.dylib" />
+        <framework src="libc++.dylib" />
+    </platform>
+</plugin>
