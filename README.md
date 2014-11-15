@@ -8,9 +8,9 @@ The official New Relic iOS SDK plugin for Cordova and PhoneGap.
 ```
 cordova plugin add https://source.datanerd.us/mobile/newrelic-cordova-ios
 ```
-- Open your project's config.xml file and add this line with your New Relic token:
+- Open your project's config.xml file (located at \<project\>/platforms/ios/\<project\>/config.xml) and add your app's New Relic token to this line:
 ```
-<preference name="NewRelicApplicationToken" value="<YOUR_TOKEN_HERE>" />
+<preference name="NewRelicApplicationToken" value="<TokenID>" />
 ```
 - Open the iOS project in Xcode (located in \<project\>/platforms/ios/\<project\>.xcodeproj)
 - Click on your Project in the Project Navigator window, under Targets select your app, and click the Build Phases tab.
