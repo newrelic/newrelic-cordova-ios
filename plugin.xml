@@ -16,6 +16,7 @@
             <feature name="NewRelic">
                 <param name="ios-package" value="CordovaNewRelic" onload="true" />
             </feature>
+            <preference name="NewRelicApplicationToken" value="TokenID" />
         </config-file>
 
         <header-file src="src/ios/CordovaNewRelic.h" />
