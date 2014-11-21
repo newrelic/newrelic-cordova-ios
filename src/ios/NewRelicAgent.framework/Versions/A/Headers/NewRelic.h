@@ -1,3 +1,4 @@
+//  New Relic version 4.139
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -567,7 +568,9 @@ extern "C" {
  * and encoding from the headers dictionary and the response body data as a
  * server error in the New Relic UI.
  *******************************************************************************/
+
 + (void)noticeNetworkRequestForURL:(NSURL*)url
+                        httpMethod:(NSString*)httpMethod
                          withTimer:(NRTimer *)timer
                    responseHeaders:(NSDictionary *)headers
                         statusCode:(NSInteger)httpStatusCode
@@ -575,6 +578,15 @@ extern "C" {
                      bytesReceived:(NSUInteger)bytesReceived
                       responseData:(NSData *)responseData
                          andParams:(NSDictionary *)params;
+
++ (void)noticeNetworkRequestForURL:(NSURL*)url
+                         withTimer:(NRTimer *)timer
+                   responseHeaders:(NSDictionary *)headers
+                        statusCode:(NSInteger)httpStatusCode
+                         bytesSent:(NSUInteger)bytesSent
+                     bytesReceived:(NSUInteger)bytesReceived
+                      responseData:(NSData *)responseData
+                         andParams:(NSDictionary *)params;__attribute__((deprecated));
 
 
 
@@ -590,8 +602,15 @@ extern "C" {
  * http://developer.apple.com/library/ios/#documentation/Cocoa/Reference/Foundation/Miscellaneous/Foundation_Constants/Reference/reference.html#//apple_ref/doc/uid/TP40003793-CH3g-SW40
  *******************************************************************************/
 + (void)noticeNetworkFailureForURL:(NSURL *)url
+                        httpMethod:(NSString*)httpMethod
                          withTimer:(NRTimer *)timer
                     andFailureCode:(NSInteger)iOSFailureCode;
+
+
++ (void)noticeNetworkFailureForURL:(NSURL *)url
+                         withTimer:(NRTimer *)timer
+                    andFailureCode:(NSInteger)iOSFailureCode; __attribute__((deprecated));
+
 
 
 @end

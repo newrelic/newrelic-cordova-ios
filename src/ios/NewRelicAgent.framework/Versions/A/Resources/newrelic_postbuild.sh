@@ -38,8 +38,6 @@ if [ ! "${DSYM_UPLOAD_URL}" ]; then
 fi
 
 API_KEY=$1
-BUILD_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' ${INFOPLIST_FILE})
-APP_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' ${INFOPLIST_FILE})
 DSYM_SRC="${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}"
 
 DSYM_UUIDS=`xcrun dwarfdump --uuid "$DSYM_SRC" | tr '[:upper:]' '[:lower:]' | tr -d '-'| awk '{print $2}' | xargs | sed 's/ /,/g'`
@@ -48,7 +46,7 @@ DSYM_UUIDS=`xcrun dwarfdump --uuid "$DSYM_SRC" | tr '[:upper:]' '[:lower:]' | tr
 
 DSYM_ARCHIVE_PATH="/tmp/$DWARF_DSYM_FILE_NAME.zip"
 
-if [ "$EFFECTIVE_PLATFORM_NAME" == "-iphonesimulator" ]; then
+if [ "$EFFECTIVE_PLATFORM_NAME" == "-iphonesimulator" -a ! "$ENABLE_SIMULATOR_DSYM_UPLOAD" ]; then
 	echo "New Relic: Skipping automatic upload of simulator build symbols"
 	exit 0
 fi
