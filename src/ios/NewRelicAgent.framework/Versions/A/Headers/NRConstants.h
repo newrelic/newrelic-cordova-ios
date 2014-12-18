@@ -45,6 +45,8 @@ typedef NSString NRMetricUnit;
 #define kNRMAExceptionHandlerHijackedMetric kNRAgentHealthPrefix @"/Hijacked/ExceptionHandler"
 
 #define kNRCarrierNameCacheLifetime     50 // milliseconds
+#define kNRWanTypeCacheLifetime         25 // milliseconds
+#define kNRNetworkStatusCacheLifetime   25 // milliseconds
 
 // Network Failure Codes
 enum NRNetworkFailureCode {

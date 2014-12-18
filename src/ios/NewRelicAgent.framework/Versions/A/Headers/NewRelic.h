@@ -1,4 +1,4 @@
-//  New Relic version 4.139
+//  New Relic version 4.152
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -586,7 +586,7 @@ extern "C" {
                          bytesSent:(NSUInteger)bytesSent
                      bytesReceived:(NSUInteger)bytesReceived
                       responseData:(NSData *)responseData
-                         andParams:(NSDictionary *)params;__attribute__((deprecated));
+                         andParams:(NSDictionary *)params __attribute__((deprecated));
 
 
 
@@ -609,7 +609,7 @@ extern "C" {
 
 + (void)noticeNetworkFailureForURL:(NSURL *)url
                          withTimer:(NRTimer *)timer
-                    andFailureCode:(NSInteger)iOSFailureCode; __attribute__((deprecated));
+                    andFailureCode:(NSInteger)iOSFailureCode __attribute__((deprecated));
 
 
 
