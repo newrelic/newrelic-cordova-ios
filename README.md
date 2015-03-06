@@ -6,7 +6,7 @@ The official New Relic iOS SDK plugin for Cordova and PhoneGap.
 
 - In your PhoneGap/Cordova project directory run this command:
 ```
-cordova plugin add https://source.datanerd.us/mobile/newrelic-cordova-ios
+cordova plugin add https://github.com/newrelic/newrelic-cordova-ios
 ```
 - Open your project's top-level config.xml file and add this line with your New Relic token:
 ```
