@@ -1,4 +1,4 @@
-//  New Relic version 5.0.1
+//  New Relic version 5.0.2
 //
 //  New Relic for Mobile -- iOS edition
 //
