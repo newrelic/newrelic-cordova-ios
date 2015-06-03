@@ -1,4 +1,4 @@
-//  New Relic version 5.0.3
+//  New Relic version 1.0
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -92,6 +92,16 @@ extern "C" {
  @param versionString The string to display as this application's version
  */
 + (void)setApplicationVersion:(NSString *)versionString;
+
+
+/*!
+ Sets the build number of the application reported in crashes to New Relic.
+ 
+ Normally New Relic will use the CFBundleVersion when reporting the build number.
+ Override the reported version by calling this method *before* calling startWithApplicationToken:.
+ */
+
++ (void) setApplicationBuild:(NSString *)buildNumber;
 
 /*!
  Returns the current anonymous Session Identifier string reported to New Relic.
