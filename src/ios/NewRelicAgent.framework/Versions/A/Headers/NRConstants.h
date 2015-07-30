@@ -27,8 +27,8 @@ enum NRTraceType {
 };
 
 #define kNRNetworkStatusDidChangeNotification @"com.newrelic.networkstatus.changed"
-#define kNRCarrierNameDidUpdateNotifcation @"com.newrelic.carrierName.changed"
-#define kNRMemoryUsageDidChangeNotification @"com.newrelic.memoryusage.changed"
+#define kNRCarrierNameDidUpdateNotification   @"com.newrelic.carrierName.changed"
+#define kNRMemoryUsageDidChangeNotification   @"com.newrelic.memoryusage.changed"
 #define kNRInteractionDidCompleteNotification @"com.newrelic.interaction.complete"
 
 
@@ -41,15 +41,24 @@ typedef NSString NRMetricUnit;
 #define kNRMetricUnitsBytesPerSecond    (NRMetricUnit*)(@"bytes/second")
 #define kNRMetricUnitsOperations        (NRMetricUnit*)@"op"
 
+
+#define kNRMAMetricSuffixCount           @"Count"
+#define kNRMAMetricSuffixTime            @"Time"
+
+#define kNRMASecondsPerMillisecond      0.001f
+
 #define kNRSupportabilityPrefix          @"Supportability/MobileAgent"
+#define kNRMAMetricActivityNetworkPrefix @"Mobile/Activity/Network"
 #define kNRAgentHealthPrefix             @"Supportability/AgentHealth"
-#define kNRMASessionStartMetric           @"Session/Start"
+#define kNRMASessionStartMetric          @"Session/Start"
 
 #define kNRMAExceptionHandlerHijackedMetric kNRAgentHealthPrefix @"/Hijacked/ExceptionHandler"
 
 #define kNRCarrierNameCacheLifetime     50 // milliseconds
 #define kNRWanTypeCacheLifetime         25 // milliseconds
 #define kNRNetworkStatusCacheLifetime   25 // milliseconds
+
+#define kNRMA_MillisecondToSecondRatio .001f
 
 // Network Failure Codes
 enum NRNetworkFailureCode {
