@@ -31,7 +31,18 @@ enum NRTraceType {
 #define kNRMemoryUsageDidChangeNotification   @"com.newrelic.memoryusage.changed"
 #define kNRInteractionDidCompleteNotification @"com.newrelic.interaction.complete"
 
+#define kNRMAAnalyticsInitializedNotification @"com.newrelic.analytics.initialized"
+#define kNRMAAnalyticsControllerKey           @"AnalyticsController"
 
+
+//Unique installs/upgrades
+#define kNRMADidGenerateNewUDIDNotification   @"com.newrelic.UDID.new"
+#define kNRMAAppInstallMetric                 @"Mobile/App/Install"
+
+#define kNRMADidChangeAppVersionNotification  @"com.newrelic.app.version.change"
+#define kNRMAAppUpgradeMetric                 @"Mobile/App/Upgrade"
+#define kNRMALastVersionKey                   @"lastVersion"
+#define kNRMACurrentVersionKey                @"currentVersion"
 //Custom Metric Units
 typedef NSString NRMetricUnit;
 
