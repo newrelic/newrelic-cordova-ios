@@ -1,4 +1,4 @@
-//  New Relic version 5.3.2
+//  New Relic version 5.3.4
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -636,7 +636,7 @@ extern "C" {
 /*!
  Records a event.
  @param name a name for the event. This will be stored in the 'category' attribute of Mobile events in New Relic Insights.
- @param attributes A NSDictionary of attributes associated with the event. Attributes should have NSString keys and NSString or NSNumber values.
+ @param attributes A NSDictionary of attributes associated with the event. Attributes should have NSString keys and NSString or NSNumber values, this include boolean support with NSNumbers. (@YES/@NO)
  @return YES if successfully added event, NO if failed with error in log.
  
  @note Events are transmitted at the end of the application session. Each event will include all global attributes defined at the end of the session.
@@ -681,7 +681,7 @@ extern "C" {
  Attributes are maintained across sessions and endure until removed or modified.
  
   @param name The name of the attribute
-  @param value The value associated with the attribute; either an NSString* or NSNumber*
+  @param value The value associated with the attribute; either an NSString* or NSNumber*, including boolean support with NSNumbers. (@YES/@NO)
   @return YES if successfully set attribute value, NO if failed with error in log.
  
   @note The SDK limits you to storing 64 named attributes. Adding more than 64 will fail and return NO.

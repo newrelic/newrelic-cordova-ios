@@ -61,6 +61,7 @@ typedef NSString NRMetricUnit;
 #define kNRMAMetricActivityNetworkPrefix @"Mobile/Activity/Network"
 #define kNRAgentHealthPrefix             @"Supportability/AgentHealth"
 #define kNRMASessionStartMetric          @"Session/Start"
+#define kNRMADidRemoveSUDIDPasteboard    kNRAgentHealthPrefix  @"/DidRemoveSUDIDPasteboard"
 
 #define kNRMAMetricSuffixCount           @"Count"
 #define kNRMAMetricSuffixTime            @"Time"
