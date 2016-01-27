@@ -37,9 +37,17 @@ enum NRTraceType {
 
 //Unique installs/upgrades
 #define kNRMADidGenerateNewUDIDNotification   @"com.newrelic.UDID.new"
+
+#define kNRMAVendorIDAttribute                @"nr.vendorID"
+
+#define kNRMASecureUDIDIsNilNotification      @"com.newrelic.SecureUDID.returnedNil"
+#define kNRMANoSecureUDIDAttribute            @"nr.noSecureUDID"
 #define kNRMAAppInstallMetric                 @"Mobile/App/Install"
+#define kNRMADeviceChangedAttribute           @"nr.deviceDidChange"
 
 #define kNRMADidChangeAppVersionNotification  @"com.newrelic.app.version.change"
+#define kNRMADeviceDidChangeNotification      @"com.newrelic.device.didChange"
+
 #define kNRMAAppUpgradeMetric                 @"Mobile/App/Upgrade"
 #define kNRMALastVersionKey                   @"lastVersion"
 #define kNRMACurrentVersionKey                @"currentVersion"

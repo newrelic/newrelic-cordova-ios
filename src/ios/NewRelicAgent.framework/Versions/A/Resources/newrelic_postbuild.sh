@@ -24,6 +24,41 @@ not_in_xcode_env() {
 	exit -2
 }
 
+upload_dsym_archive_to_new_relic() {
+	let RETRY_LIMIT=3
+	let RETRY_COUNT=0
+
+	if [ ! -f "$DSYM_ARCHIVE_PATH" ]; then
+		echo "New Relic: Failed to archive \"${DSYM_SRC}\" to \"${DSYM_ARCHIVE_PATH}\""
+		exit -3
+	fi
+
+	while [ "$RETRY_COUNT" -lt "$RETRY_LIMIT" ] 
+	do 
+		let RETRY_COUNT=$RETRY_COUNT+1
+		echo "dSYM archive upload attempt #${RETRY_COUNT} (of ${RETRY_LIMIT})"
+
+		echo "curl --write-out %{http_code} --silent --output /dev/null -F dsym=@\"${DSYM_ARCHIVE_PATH}\" -F buildId=\"$DSYM_UUIDS\" -F appName=\"$EXECUTABLE_NAME\" -H \"X-APP-LICENSE-KEY: ${API_KEY}\" \"${DSYM_UPLOAD_URL}\""
+		SERVER_RESPONSE=$(curl --write-out %{http_code} --silent --output /dev/null -F dsym=@"${DSYM_ARCHIVE_PATH}" -F buildId="$DSYM_UUIDS"  -F appName="$EXECUTABLE_NAME" -H "X-APP-LICENSE-KEY: ${API_KEY}" "${DSYM_UPLOAD_URL}")
+
+		if [ $SERVER_RESPONSE -eq 201 ]; then
+		    echo "New Relic: Successfully uploaded debug symbols"
+		    break
+		else
+		    if [ $SERVER_RESPONSE -eq 409 ]; then
+		        echo "New Relic: dSYM \"${DSYM_UUIDS}\" already uploaded"
+		        break
+		    else
+		        echo "New Relic: ERROR \"${SERVER_RESPONSE}\" while uploading \"${DSYM_ARCHIVE_PATH}\" to \"${DSYM_ARCHIVE_PATH}\""
+		        # exit -4
+		    fi
+		fi
+	done 
+
+	/bin/rm -f "${DSYM_ARCHIVE_PATH}"
+
+}
+
 if [ ! $1 ]; then
 	echo "usage: $0 <NEW_RELIC_APP_TOKEN>"
 	exit -1
@@ -44,35 +79,22 @@ DSYM_UUIDS=`xcrun dwarfdump --uuid "$DSYM_SRC" | tr '[:upper:]' '[:lower:]' | tr
 
 # TODO if DSYM_UUIDS contains 'unsupported' then DSYM_UUIDS=''
 
-DSYM_ARCHIVE_PATH="/tmp/$DWARF_DSYM_FILE_NAME.zip"
+# TODO: Add pid/timestamp to tmp file name
+DSYM_TIMESTAMP=`date +%s`
+DSYM_ARCHIVE_PATH="/tmp/${DWARF_DSYM_FILE_NAME}-${DSYM_TIMESTAMP}.zip"
 
 if [ "$EFFECTIVE_PLATFORM_NAME" == "-iphonesimulator" -a ! "$ENABLE_SIMULATOR_DSYM_UPLOAD" ]; then
 	echo "New Relic: Skipping automatic upload of simulator build symbols"
 	exit 0
 fi
 
+# TODO: Convert to function and call in background
+
+# Loop until upload success or retry limit is exceeded
+
 echo "New Relic: Archiving \"${DSYM_SRC}\" to \"${DSYM_ARCHIVE_PATH}\""
 /usr/bin/zip --recurse-paths --quiet "${DSYM_ARCHIVE_PATH}" "${DSYM_SRC}"
 
-if [ ! -f "$DSYM_ARCHIVE_PATH" ]; then
-	echo "New Relic: Failed to archive \"${DSYM_SRC}\" to \"${DSYM_ARCHIVE_PATH}\""
-	exit -3
-fi
-
-echo "curl --write-out %{http_code} --silent --output /dev/null -F dsym=@\"${DSYM_ARCHIVE_PATH}\" -F buildId=\"$DSYM_UUIDS\" -F appName=\"$EXECUTABLE_NAME\" -H \"X-APP-LICENSE-KEY: ${API_KEY}\" \"${DSYM_UPLOAD_URL}\""
-SERVER_RESPONSE=$(curl --write-out %{http_code} --silent --output /dev/null -F dsym=@"${DSYM_ARCHIVE_PATH}" -F buildId="$DSYM_UUIDS"  -F appName="$EXECUTABLE_NAME" -H "X-APP-LICENSE-KEY: ${API_KEY}" "${DSYM_UPLOAD_URL}")
-
-if [ $SERVER_RESPONSE -eq 201 ]; then
-    echo "New Relic: Successfully uploaded debug symbols"
-else
-    if [ $SERVER_RESPONSE -eq 409 ]; then
-        echo "New Relic: dSYM \"${DSYM_UUIDS}\" already uploaded"
-    else
-        echo "New Relic: ERROR \"${SERVER_RESPONSE}\" while uploading \"${DSYM_ARCHIVE_PATH}\" to \"${DSYM_ARCHIVE_PATH}\""
-        exit -4
-    fi
-fi
-
-/bin/rm -f "${DSYM_ARCHIVE_PATH}"
+upload_dsym_archive_to_new_relic > upload_dsym_results 2>&1 &
 
 exit 0
