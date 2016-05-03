@@ -10,10 +10,37 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#ifndef __NRCONSTANTS_H
+#define __NRCONSTANTS_H
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
+// NRMAApplicationPlatform is an enum defining a list of possible
+// platforms used to build the application.
+    typedef NS_ENUM(NSUInteger, NRMAApplicationPlatform) {
+        NRMAPlatform_Native,
+        NRMAPlatform_Cordova,
+        NRMAPlatform_PhoneGap,
+        NRMAPlatform_Xamarin,
+        NRMAPlatform_Unity,
+        NRMAPlatform_Appcelerator,
+        NRMAPlatform_React
+    };
+
+// these constants are paired with enum values of NRMAApplicationPlatform
+// they are used to convert the enum value to a human readable name.
+// to update these values, look to NewRelicInternalUtils.m to add additional
+// translations.
+#define kNRMAPlatformString_Native       @"Native"
+#define kNRMAPlatformString_Cordova      @"Cordova"
+#define kNRMAPlatformString_PhoneGap     @"PhoneGap"
+#define kNRMAPlatformString_Xamarin      @"Xamarin"
+#define kNRMAPlatformString_Unity        @"Unity"
+#define kNRMAPlatformString_Appcelerator @"Appcelerator"
+#define kNRMAPlatformString_React        @"React"
+
 
 //Custom Trace Types
 enum NRTraceType {
@@ -132,4 +159,5 @@ enum NRNetworkFailureCode {
 
 #ifdef __cplusplus
 }
+#endif
 #endif
