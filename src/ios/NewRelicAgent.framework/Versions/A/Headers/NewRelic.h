@@ -1,4 +1,3 @@
-//  New Relic version 5.4.1
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -102,6 +101,14 @@ extern "C" {
  */
 
 + (void) setApplicationBuild:(NSString *)buildNumber;
+
+/*!
+ *  set the application platform with which the app was built.
+ *  Default is 'Native'.
+ *  Some supported platforms may automatically be detected.
+ */
+
++ (void) setPlatform:(NRMAApplicationPlatform)platform;
 
 /*!
  Returns the current anonymous Session Identifier string reported to New Relic.
