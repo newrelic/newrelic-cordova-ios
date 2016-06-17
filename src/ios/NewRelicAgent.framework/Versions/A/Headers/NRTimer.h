@@ -10,7 +10,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#ifndef NRTIMER_H
+#define NRTIMER_H
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -50,4 +51,5 @@ double NRMA_NanosecondsFromTimeInterval(double timeInterval);
 
 #ifdef __cplusplus
 }
+#endif
 #endif
