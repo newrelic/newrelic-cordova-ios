@@ -1,16 +1,16 @@
-#!/bin/bash
 
+#!/bin/bash
 #
 # Shell script to upload an iOS build's debug symbols to New Relic.
 #
 # usage:
-# This script needs to be invoked during an XCode build. 
-# 
+# This script needs to be invoked during an XCode build
+#
 # 1. In XCode, select your project in the navigator, then click on the application target.
 # 2. Select the Build Phases tab in the settings editor.
 # 3. Click the + icon above Target Dependencies and choose New Run Script Build Phase.
-# 4. Add the following two lines of code to the new phase, 
-#     removing the '#' at the start of each line and pasting in the 
+# 4. Add the following two lines of code to the new phase,
+#     removing the '#' at the start of each line and pasting in the
 #     application token from your New Relic dashboard for the app in question.
 #
 #SCRIPT=`/usr/bin/find "${SRCROOT}" -name newrelic_postbuild.sh | head -n 1`
@@ -28,13 +28,13 @@ upload_dsym_archive_to_new_relic() {
 	let RETRY_LIMIT=3
 	let RETRY_COUNT=0
 
-	if [ ! -f "$DSYM_ARCHIVE_PATH" ]; then
+	if [ ! -f "${DSYM_ARCHIVE_PATH}" ]; then
 		echo "New Relic: Failed to archive \"${DSYM_SRC}\" to \"${DSYM_ARCHIVE_PATH}\""
 		exit -3
 	fi
 
-	while [ "$RETRY_COUNT" -lt "$RETRY_LIMIT" ] 
-	do 
+	while [ "$RETRY_COUNT" -lt "$RETRY_LIMIT" ]
+	do
 		let RETRY_COUNT=$RETRY_COUNT+1
 		echo "dSYM archive upload attempt #${RETRY_COUNT} (of ${RETRY_LIMIT})"
 
@@ -53,10 +53,9 @@ upload_dsym_archive_to_new_relic() {
 		        # exit -4
 		    fi
 		fi
-	done 
+	done
 
 	/bin/rm -f "${DSYM_ARCHIVE_PATH}"
-
 }
 
 if [ ! $1 ]; then
@@ -72,29 +71,40 @@ if [ ! "${DSYM_UPLOAD_URL}" ]; then
 	DSYM_UPLOAD_URL="https://mobile-symbol-upload.newrelic.com/symbol"
 fi
 
-API_KEY=$1
-DSYM_SRC="${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}"
+echo for dSYM in `ls ${DWARF_DSYM_FOLDER_PATH}/*.dSYM`
+for dSYM in `ls -d ${DWARF_DSYM_FOLDER_PATH}/*.dSYM`
+do
+  API_KEY=$1
+  echo processing $dSYM
+  DSYM_SRC="${dSYM}"
 
-DSYM_UUIDS=`xcrun dwarfdump --uuid "$DSYM_SRC" | tr '[:upper:]' '[:lower:]' | tr -d '-'| awk '{print $2}' | xargs | sed 's/ /,/g'`
+  echo generating dSYM UUIDs
+  echo "DSYM_UUIDS='xcrun dwarfdump --uuid "$DSYM_SRC" | tr '[:upper:]' '[:lower:]' | tr -d '-'| awk '{print $2}' | xargs | sed 's/ /,/g''"
+  DSYM_UUIDS=`xcrun dwarfdump --uuid "$DSYM_SRC" | tr '[:upper:]' '[:lower:]' | tr -d '-'| awk '{print $2}' | xargs | sed 's/ /,/g'`
+  echo gathered UUID: $DSYM_UUIDS
 
-# TODO if DSYM_UUIDS contains 'unsupported' then DSYM_UUIDS=''
+  # TODO if DSYM_UUIDS contains 'unsupported' then DSYM_UUIDS=''
 
-# TODO: Add pid/timestamp to tmp file name
-DSYM_TIMESTAMP=`date +%s`
-DSYM_ARCHIVE_PATH="/tmp/${DWARF_DSYM_FILE_NAME}-${DSYM_TIMESTAMP}.zip"
+  # TODO: Add pid/timestamp to tmp file name
+  DSYM_TIMESTAMP=`date +%s`
+  DSYM_ARCHIVE_PATH="/tmp/${DSYM_SRC##*/}-${DSYM_TIMESTAMP}.zip"
 
-if [ "$EFFECTIVE_PLATFORM_NAME" == "-iphonesimulator" -a ! "$ENABLE_SIMULATOR_DSYM_UPLOAD" ]; then
-	echo "New Relic: Skipping automatic upload of simulator build symbols"
-	exit 0
-fi
 
-# TODO: Convert to function and call in background
+  if [ "$EFFECTIVE_PLATFORM_NAME" == "-iphonesimulator" -a ! "$ENABLE_SIMULATOR_DSYM_UPLOAD" ]; then
+    echo "New Relic: Skipping automatic upload of simulator build symbols"
+    exit 0
+  fi
 
-# Loop until upload success or retry limit is exceeded
+  # TODO: Convert to function and call in background
 
-echo "New Relic: Archiving \"${DSYM_SRC}\" to \"${DSYM_ARCHIVE_PATH}\""
-/usr/bin/zip --recurse-paths --quiet "${DSYM_ARCHIVE_PATH}" "${DSYM_SRC}"
+  # Loop until upload success or retry limit is exceeded
 
-upload_dsym_archive_to_new_relic > upload_dsym_results 2>&1 &
+  echo "New Relic: Archiving \"${DSYM_SRC}\" to \"${DSYM_ARCHIVE_PATH}\""
+  echo /usr/bin/zip --recurse-paths --quiet "${DSYM_ARCHIVE_PATH}" "${DSYM_SRC}"
+  /usr/bin/zip --recurse-paths --quiet "${DSYM_ARCHIVE_PATH}" "${DSYM_SRC}"
 
+  echo calling : upload_dsym_archive_to_new_relic
+  upload_dsym_archive_to_new_relic
+
+done
 exit 0
