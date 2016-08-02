@@ -71,7 +71,9 @@ if [ ! "${DSYM_UPLOAD_URL}" ]; then
 	DSYM_UPLOAD_URL="https://mobile-symbol-upload.newrelic.com/symbol"
 fi
 
-echo for dSYM in `ls ${DWARF_DSYM_FOLDER_PATH}/*.dSYM`
+#save and set IFS to only trigger on \n\b
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
 for dSYM in `ls -d ${DWARF_DSYM_FOLDER_PATH}/*.dSYM`
 do
   API_KEY=$1
@@ -107,4 +109,8 @@ do
   upload_dsym_archive_to_new_relic
 
 done
+
+#revert IFS
+IFS=$SAVEIFS
+
 exit 0
