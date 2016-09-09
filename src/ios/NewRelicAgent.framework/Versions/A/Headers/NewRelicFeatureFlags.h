@@ -15,36 +15,26 @@
  NRMAFeatureFlags
  
  These flags are used to identify New Relic features.
-
-- NRFeatureFlag_InteractionTracing
-   Enable (default) or disable interaction tracing.
-
-- NRFeatureFlag_SwiftInteractionTracing
-   Disabled by default. Beware: enabling this feature may cause your swift application to crash.
-   please read https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile/getting-started/enabling-interaction-tracing-swift
-   before enabling this feature.
-
-- NRFeatureFlag_CrashReporting 
-   Enabled by default. Enable or disable New Relic's crash reporter.
-
-- NRFeatureFlag_NSURLSessionInstrumentation
-   Enable (default) flag for instrumentation of NSURLSessions.
-   Currently only instruments network activity dispatched with
-   NSURLSessionDataTasks and NSURLSessionUploadTasks.
-
-- NRFeatureFlag_HttpResponseBodyCapture
-   Enable (default) or disable HTTP response body capture for HTTP errors. 
-   New Relic only captures the response bodies of HTTP errors.
-
-- NRFeatureFlag_DefaultInteractions
-   Enabled by default. This flag is used to only disable the default Interactions
-   New Relic will trace. Default interactions are started when a view controller is displayed
-   and are titled "Displayed <ViewControllerName>". This flag is associated with
-   NRFeatureFlag_InteractionTracing, but acts as a subset of functionality on that feature.
+ 
+ - NRFeatureFlag_NSURLSessionInstrumentation
+    Disabled by default. Flag for instrumentation of NSURLSessions.
+    Currently only instruments network activity dispatched with
+    NSURLSessionDataTasks and NSURLSessionUploadTasks.
 
 - NRFeatureFlag_ExperimentalNetworkingInstrumentation
    Disabled by default. Enables experimental networking instrumentation. This
    feature may decrease the stability of applications.
+
+- NRFeatureFlag_SwifterInteractionTracing
+   Beware: enabling this feature may cause your swift application to crash.
+   please read https://docs.newrelic.com/docs/mobile-monitoring/new-relic-mobile/getting-started/enabling-interaction-tracing-swift
+   before enabling this feature.
+ 
+- NRFeatureFlag_DefaultInteractions
+    Enabled by default. This flag is used to only disable the default Interactions
+    New Relic will trace. Default interactions are started when a view controller is displayed
+    and are titled "Displayed <ViewControllerName>". This flag is associated with
+    NRFeatureFlag_InteractionTracing, but acts as a subset of functionality on that feature.
 */
 
 
