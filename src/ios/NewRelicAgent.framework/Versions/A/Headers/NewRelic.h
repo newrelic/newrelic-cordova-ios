@@ -1,4 +1,4 @@
-// Using New Relic Agent Version: 5.8.3
+// Using New Relic Agent Version: 5.9.0
 //
 //  New Relic for Mobile -- iOS edition
 //
@@ -722,6 +722,13 @@ extern "C" {
 + (BOOL) incrementAttribute:(NSString*)name
                       value:(NSNumber*)amount;
 
+/*!
+ Sets the value of the attribute 'userId' to the supplied string.
+ 
+ @param userId the identifier for the user
+ @return  YES if successfully set attribute value, NO if failed with error in log.
+ */
++ (BOOL) setUserId:(NSString*)userId;
 
 /*!
  Removes the named attribute.
