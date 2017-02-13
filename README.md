@@ -1,4 +1,11 @@
-### New Relic iOS SDK for Cordova and PhoneGap
+
+></br>
+># [ D E P R E C A T E D ]
+> **This project has been deprecated in favor of the [New Relic iOS/Android Cordova plugin](https://github.com/newrelic/newrelic-cordova-plugin).</br></br>**
+
+</br></br>
+
+## New Relic iOS SDK for Cordova and PhoneGap
 
 The official New Relic iOS SDK plugin for Cordova and PhoneGap.
 
