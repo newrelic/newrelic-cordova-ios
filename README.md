@@ -1,3 +1,20 @@
+## Checkout our new [cordova plugin](https://github.com/newrelic/newrelic-cordova-plugin) with Android and iOS support
+
+Available at https://github.com/newrelic/newrelic-cordova-plugin
+
+Improvments include:
+- streamlined installation
+- automatic config.xml editing
+- automatic post build script injection
+
+
+<hr>
+</br>
+this plugin is : 
+# `D E P R E C A T E D`
+This plugin is deprecated in favor of the [New Relic iOS/Android Cordova plugin](https://github.com/newrelic/newrelic-cordova-plugin).
+<hr>
+
 ### New Relic iOS SDK for Cordova and PhoneGap
 
 The official New Relic iOS SDK plugin for Cordova and PhoneGap.
