@@ -1,3 +1,5 @@
+[![Archived header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Archived.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#archived)
+
 ## Checkout our new [cordova plugin](https://github.com/newrelic/newrelic-cordova-plugin) with Android and iOS support
 
 Available at https://github.com/newrelic/newrelic-cordova-plugin
